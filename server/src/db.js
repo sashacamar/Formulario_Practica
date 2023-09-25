@@ -1,7 +1,7 @@
+require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const FormModel = require("./models/Form");
 
-require('dotenv').config();
 const { DB_DEPLOY } = process.env;
 
 const sequelize = new Sequelize(DB_DEPLOY, {
