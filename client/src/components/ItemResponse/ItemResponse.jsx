@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { sendForm } from '../../redux/actions';
-import styles from './Item.module.css';
+import styles from './ItemResponse.module.css';
 
 
-const Item = ({item, form, setForm}) => {
+const Item = ({item, response}) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
     const [info, setInfo] = useState({
-        [item.name] : ''
+        [item.name] : response[item.name]
     })
+
+    useEffect(()=>{
+        setInfo({...info, [item.name]:response[item.name]});
+    },[])
 
     const changeHandler = (event) => {
         const property = event.target.name;
@@ -22,19 +26,19 @@ const Item = ({item, form, setForm}) => {
 
         setInfo({...info, [property]:value});
 
-        setForm({...form, [property]:value});
-        console.log({...form, [property]:value});
+        // setForm({...form, [property]:value});
+        // console.log({...form, [property]:value});
     }
 
     const submitHandler = async (event) => {
         event.preventDefault();
-        try {
-            dispatch(sendForm(form));
-            console.log('funciono');
-            history.push('/done');
-        } catch (error) {
-            console.log(error);
-        }
+        // try {
+        //     dispatch(sendForm(form));
+        //     console.log('funciono');
+        //     history.push('/done');
+        // } catch (error) {
+        //     console.log(error);
+        // }
     }
 
     const nothing =()=>{

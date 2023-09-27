@@ -2,7 +2,7 @@ import { GET_ALL_FORMS, GET_FORM_BY_ID, SEND_FORM, UPDATE_FORM } from "./types";
 
 const initialState = {
     id: '',
-    form: []
+    form: '',
 }
 
 const rootReducer = (state = initialState, action) => {
