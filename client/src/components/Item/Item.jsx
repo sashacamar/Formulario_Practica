@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { sendForm } from '../../redux/actions';
 import styles from './Item.module.css';
 
 
 const Item = ({item, form, setForm}) => {
+    const id = useSelector(state=> state.id)
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -29,9 +30,9 @@ const Item = ({item, form, setForm}) => {
     const submitHandler = async (event) => {
         event.preventDefault();
         try {
-            dispatch(sendForm(form));
+            await dispatch(sendForm(form));
             console.log('funciono');
-            history.push('/done');
+            history.push(`/done?`);
         } catch (error) {
             console.log(error);
         }

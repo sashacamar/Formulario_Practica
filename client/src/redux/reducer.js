@@ -8,9 +8,11 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
     switch(action.type) {
         case SEND_FORM:
-            return { ...state, id: action.payload.id}
+            return { ...state, id: action.payload.id};
         case GET_FORM_BY_ID:
-            return { ...state, form: action.payload}
+            return { ...state, form: action.payload};
+        case UPDATE_FORM:
+            return { ...state, form: ''};
         default: return { ...state };
     }
 }

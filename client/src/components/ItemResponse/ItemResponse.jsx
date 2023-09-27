@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { sendForm } from '../../redux/actions';
 import styles from './ItemResponse.module.css';
+import { updateForm } from '../../redux/actions';
 
 
-const Item = ({item, response}) => {
+const Item = ({item, response, id, updateData, setUpdateData, isDisabled}) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -26,19 +26,21 @@ const Item = ({item, response}) => {
 
         setInfo({...info, [property]:value});
 
-        // setForm({...form, [property]:value});
-        // console.log({...form, [property]:value});
+        //console.log({...info, [property]:value});
+
+        setUpdateData({...updateData, [property]:value});
+        console.log({...updateData, [property]:value});
     }
 
     const submitHandler = async (event) => {
         event.preventDefault();
-        // try {
-        //     dispatch(sendForm(form));
-        //     console.log('funciono');
-        //     history.push('/done');
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            dispatch(updateForm(id, updateData));
+            console.log('update');
+            history.push('/done?update');
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const nothing =()=>{
@@ -46,11 +48,13 @@ const Item = ({item, response}) => {
     }
 
 
+
+
     return <div 
     className={item.type === 'submit' ? (`${styles.Submit}`) : (`${styles.ItemContainer} `)}
     onClick={item.type === 'submit' ? submitHandler : nothing }
     >
-
+        
 
         <label htmlFor={item.name}>{item.label}</label>
         {(item.type !== 'select' && item.type !== 'radio' && item.type !== 'submit')?
@@ -60,12 +64,18 @@ const Item = ({item, response}) => {
             name={item.name}
             id={item.name}
             required={item.required}
+            disabled={isDisabled}
+            checked={info[item.name]}
             />
         :(<></>)}
 
         {item.type === 'select'?
-        (<select name={item.name} id={item.name} onChange={changeHandler} >
-            <option value="">Choose an option</option>
+        (<select name={item.name} 
+        id={item.name} 
+        onChange={changeHandler} 
+        disabled={isDisabled}
+        >
+            <option value={info[item.name]}>{info[item.name]}</option>
             {item.options.map(option => (
                 <option value={option.value}>{option.label}</option>
             ))}
@@ -75,7 +85,10 @@ const Item = ({item, response}) => {
         {item.type === 'radio'? 
         (<>{item.options.map(option => (
             <div key={option.value}>
-                <input type={item.type} name={item.name} id={option.value} onChange={changeHandler} />
+                <input type={item.type} name={item.name} id={option.value} onChange={changeHandler} 
+                disabled={isDisabled}
+                checked={info[item.name] === option.value}
+                />
                 <label htmlFor={option.value}>{option.value}</label>
             </div>
         ))}</>)
