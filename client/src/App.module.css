@@ -1,0 +1,13 @@
+body, input, select{
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-color: #f7f7f7;
+    color: black;
+}

@@ -49,9 +49,11 @@ const Item = ({item, form, setForm}) => {
     >
 
 
-        <label htmlFor={item.name}>{item.label}</label>
+        <label className={`${styles.label}`} htmlFor={item.name}>{item.label}</label>
         {(item.type !== 'select' && item.type !== 'radio' && item.type !== 'submit')?
-            <input type={item.type} 
+            <input 
+            className={item.type === 'checkbox' ? (`${styles.checkbox}`) :(`${styles.Item} ${styles.border}`)}
+            type={item.type} 
             value={info[item.name]} 
             onChange={changeHandler} 
             name={item.name}
@@ -61,7 +63,9 @@ const Item = ({item, form, setForm}) => {
         :(<></>)}
 
         {item.type === 'select'?
-        (<select name={item.name} id={item.name} onChange={changeHandler} >
+        (<select 
+            className={`${styles.Item} ${styles.border}`}
+            name={item.name} id={item.name} onChange={changeHandler} >
             <option value="">Choose an option</option>
             {item.options.map(option => (
                 <option value={option.value}>{option.label}</option>
@@ -71,8 +75,11 @@ const Item = ({item, form, setForm}) => {
 
         {item.type === 'radio'? 
         (<>{item.options.map(option => (
-            <div key={option.value}>
-                <input type={item.type} name={item.name} id={option.value} onChange={changeHandler} />
+            <div 
+            className={`${styles.Item}`}
+            key={option.value}>
+                <input 
+                type={item.type} name={item.name} id={option.value} onChange={changeHandler} />
                 <label htmlFor={option.value}>{option.value}</label>
             </div>
         ))}</>)

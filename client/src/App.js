@@ -1,4 +1,5 @@
 import { Route } from "react-router-dom";
+import styles from './App.module.css';
 
 import Form from "./views/Form/Form";
 import Finished from "./views/Finished/Finished";
